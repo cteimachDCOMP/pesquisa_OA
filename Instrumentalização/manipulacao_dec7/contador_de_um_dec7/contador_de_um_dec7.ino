@@ -30,7 +30,6 @@ void imprimeNumero(int n) {
 }
 
 void setup() {
-
   for (int i = 0; i <= 7; i++) {
     pinMode(disposicao_pinos[i], OUTPUT);
   }
