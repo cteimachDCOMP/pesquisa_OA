@@ -1,4 +1,3 @@
-// Multiplexação de 5 Displays de 7 segmentos
 #include <TimerOne.h>
 
 #define DISP_UNIDADE 10
@@ -44,60 +43,30 @@ void trocarDisplay() {
   digitalWrite(DISP_MILHAR, LOW);
   digitalWrite(DISP_DEZMILHAR, LOW);
 
-  delayMicroseconds(100);
+  delayMicroseconds(10);
 
   switch (alterna) {
     case 1:
-      digitalWrite(DISP_UNIDADE, LOW);
-      digitalWrite(DISP_DEZENA, LOW);
-      digitalWrite(DISP_CENTENA, LOW);
-      digitalWrite(DISP_MILHAR, LOW);
-      digitalWrite(DISP_DEZMILHAR, LOW);
-      
       imprimeNumero(valor_unidade);
       digitalWrite(DISP_UNIDADE, HIGH);
       break;
 
     case 2:
-      digitalWrite(DISP_UNIDADE, LOW);
-      digitalWrite(DISP_DEZENA, LOW);
-      digitalWrite(DISP_CENTENA, LOW);
-      digitalWrite(DISP_MILHAR, LOW);
-      digitalWrite(DISP_DEZMILHAR, LOW);
-      
       imprimeNumero(valor_dezena);
       digitalWrite(DISP_DEZENA, HIGH);
       break;
 
     case 3:
-      digitalWrite(DISP_UNIDADE, LOW);
-      digitalWrite(DISP_DEZENA, LOW);
-      digitalWrite(DISP_CENTENA, LOW);
-      digitalWrite(DISP_MILHAR, LOW);
-      digitalWrite(DISP_DEZMILHAR, LOW);
-      
       imprimeNumero(valor_centena);
       digitalWrite(DISP_CENTENA, HIGH);
       break;
 
     case 4:
-      digitalWrite(DISP_UNIDADE, LOW);
-      digitalWrite(DISP_DEZENA, LOW);
-      digitalWrite(DISP_CENTENA, LOW);
-      digitalWrite(DISP_MILHAR, LOW);
-      digitalWrite(DISP_DEZMILHAR, LOW);
-      
       imprimeNumero(valor_milhar);
       digitalWrite(DISP_MILHAR, HIGH);
       break;
 
     case 5:
-      digitalWrite(DISP_UNIDADE, LOW);
-      digitalWrite(DISP_DEZENA, LOW);
-      digitalWrite(DISP_CENTENA, LOW);
-      digitalWrite(DISP_MILHAR, LOW);
-      digitalWrite(DISP_DEZMILHAR, LOW);
-      
       imprimeNumero(valor_dezenaMilhar);
       digitalWrite(DISP_DEZMILHAR, HIGH);
       break;
@@ -120,10 +89,10 @@ void setup() {
     pinMode(disposicao_pinos[i], OUTPUT);
   }
 
-  imprimeNumero(2);
+  Timer1.initialize(2000);
+  Timer1.attachInterrupt(trocarDisplay);
 
-  Timer1.initialize(5000);
-  //Timer1.attachInterrupt(trocarDisplay);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -133,12 +102,22 @@ void loop() {
   valor_milhar = (num / 4096) % 16;
   valor_dezenaMilhar = (num / 65536) % 16;
 
+  Serial.print(valor_dezenaMilhar);
+  Serial.print(" || ");
+  Serial.print(valor_milhar);
+  Serial.print(" || ");
+  Serial.print(valor_centena);
+  Serial.print(" || ");
+  Serial.print(valor_dezena);
+  Serial.print(" || ");
+  Serial.print(valor_unidade);
+  Serial.println("");
+
   num++;
 
   if (num > 1048575) {
     num = 0;
   }
 
-  delay(1000);
+  delay(10);
 }
-
