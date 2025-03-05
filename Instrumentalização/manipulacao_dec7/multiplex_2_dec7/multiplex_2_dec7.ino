@@ -36,13 +36,13 @@ void trocarDisplay() {
   static bool alternar = false;
 
   if (alternar) {
-    digitalWrite(DISP_UNIDADE, LOW);
-    imprimeNumero(valor_dezena);
-    digitalWrite(DISP_DEZENA, HIGH);
-  } else {
-    digitalWrite(DISP_DEZENA, LOW);
-    imprimeNumero(valor_unidade);
     digitalWrite(DISP_UNIDADE, HIGH);
+    imprimeNumero(valor_dezena);
+    digitalWrite(DISP_DEZENA, LOW);
+  } else {
+    digitalWrite(DISP_DEZENA, HIGH);
+    imprimeNumero(valor_unidade);
+    digitalWrite(DISP_UNIDADE, LOW);
   }
 
   alternar = !alternar;
