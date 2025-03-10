@@ -43,8 +43,6 @@ void trocarDisplay() {
   digitalWrite(DISP_MILHAR, LOW);
   digitalWrite(DISP_DEZMILHAR, LOW);
 
-  delayMicroseconds(10);
-
   switch (alterna) {
     case 1:
       imprimeNumero(valor_unidade);
@@ -89,7 +87,7 @@ void setup() {
     pinMode(disposicao_pinos[i], OUTPUT);
   }
 
-  Timer1.initialize(2000);
+  Timer1.initialize(4000);
   Timer1.attachInterrupt(trocarDisplay);
 
   Serial.begin(9600);
@@ -119,5 +117,5 @@ void loop() {
     num = 0;
   }
 
-  delay(10);
+  delay(1000);
 }
