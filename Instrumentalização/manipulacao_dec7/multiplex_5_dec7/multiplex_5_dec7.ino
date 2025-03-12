@@ -37,36 +37,39 @@ void imprimeNumero(int n) {
 }
 
 void trocarDisplay() {
-  digitalWrite(DISP_UNIDADE, LOW);
-  digitalWrite(DISP_DEZENA, LOW);
-  digitalWrite(DISP_CENTENA, LOW);
-  digitalWrite(DISP_MILHAR, LOW);
-  digitalWrite(DISP_DEZMILHAR, LOW);
+  digitalWrite(DISP_UNIDADE, HIGH);
+  digitalWrite(DISP_DEZENA, HIGH);
+  digitalWrite(DISP_CENTENA, HIGH);
+  digitalWrite(DISP_MILHAR, HIGH);
+  digitalWrite(DISP_DEZMILHAR, HIGH);
 
   switch (alterna) {
     case 1:
+      digitalWrite(DISP_UNIDADE, LOW);
       imprimeNumero(valor_unidade);
-      digitalWrite(DISP_UNIDADE, HIGH);
       break;
 
     case 2:
+      digitalWrite(DISP_DEZENA, LOW);
       imprimeNumero(valor_dezena);
-      digitalWrite(DISP_DEZENA, HIGH);
       break;
 
     case 3:
+      digitalWrite(DISP_CENTENA, LOW);
       imprimeNumero(valor_centena);
-      digitalWrite(DISP_CENTENA, HIGH);
+      
       break;
 
     case 4:
+      digitalWrite(DISP_MILHAR, LOW);
       imprimeNumero(valor_milhar);
-      digitalWrite(DISP_MILHAR, HIGH);
+      
       break;
 
     case 5:
+      digitalWrite(DISP_DEZMILHAR, LOW);
       imprimeNumero(valor_dezenaMilhar);
-      digitalWrite(DISP_DEZMILHAR, HIGH);
+      
       break;
   }
 
@@ -117,5 +120,5 @@ void loop() {
     num = 0;
   }
 
-  delay(1000);
+  delay(100);
 }

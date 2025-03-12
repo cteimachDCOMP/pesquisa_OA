@@ -1,8 +1,8 @@
 // Multiplexação de 2 Decodificadores de 7 segmentos
 #include <TimerOne.h>
 
-#define DISP_UNIDADE 11
-#define DISP_DEZENA 12
+#define DISP_UNIDADE 10
+#define DISP_DEZENA 11
 
 int num = 0, valor_unidade = 0, valor_dezena = 0;
 int disposicao_pinos[8] = { 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -35,14 +35,15 @@ void imprimeNumero(int n) {
 void trocarDisplay() {
   static bool alternar = false;
 
+  digitalWrite(DISP_DEZENA, LOW);
+  digitalWrite(DISP_UNIDADE, LOW);
+
   if (alternar) {
     digitalWrite(DISP_UNIDADE, HIGH);
     imprimeNumero(valor_dezena);
-    digitalWrite(DISP_DEZENA, LOW);
   } else {
     digitalWrite(DISP_DEZENA, HIGH);
     imprimeNumero(valor_unidade);
-    digitalWrite(DISP_UNIDADE, LOW);
   }
 
   alternar = !alternar;
@@ -69,5 +70,5 @@ void loop() {
     num = 0;
   }
 
-  delay(1000);
+  delay(100);
 }
