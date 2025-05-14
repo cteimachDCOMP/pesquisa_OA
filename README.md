@@ -10,3 +10,6 @@
 
 ### Utilização da Biblioteca TimerOne
 -> https://youtu.be/xXRxSOKJcdg?si=p36ecVWnGM7YmYT3
+
+## Teste Bluetooth
+-> https://youtu.be/tUduuJk8lqA?si=CUh2ABCyKcQy8Q73
