@@ -1,3 +1,5 @@
+#include <TimerOne.h>
+
 #define DISP_UNIDADE 10
 #define DISP_DEZENA 11
 #define DISP_CENTENA 12
@@ -57,7 +59,6 @@ void trocarDisplay() {
     alterna = 1;
   }
 
-  delayMicroseconds(500);
 }
 
 void setup() {
@@ -71,11 +72,13 @@ void setup() {
     pinMode(disposicao_pinos[i], OUTPUT);
   }
 
+  Timer1.initialize(4000);
+  Timer1.attachInterrupt(trocarDisplay);
+
   Serial.begin(9600);
 }
 
 void loop() {
-  trocarDisplay();
     if ((continuar == 's') || (continuar == 'S')){
     Serial.println("Bem vindo(a) ao adivinhador binário!");
 
