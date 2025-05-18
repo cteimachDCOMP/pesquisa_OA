@@ -9,7 +9,13 @@
 int num = 0;
 int valor_unidade = 0, valor_dezena = 0, valor_centena = 0, valor_milhar = 0, valor_dezenaMilhar = 0;
 int alterna = 1;
-char continuar = 's';
+
+int lista1[8] = {1,3,5,7,9,11,13,15};
+int lista2[8] = {2,3,6,7,10,11,14,15};
+int lista3[8] = {4,5,6,7,12,13,14,15};
+int lista4[8] = {8,9,10,11,12,13,14,15};
+
+char confirmacao = '\0';
 
 int disposicao_pinos[6] = {2, 3, 4, 5, 6, 7};
 
@@ -21,6 +27,38 @@ int digitos[2][6] = {
 void imprimeNumero(int n) {
   for (int i = 0; i < 6; i++) {
     digitalWrite(disposicao_pinos[i], digitos[n][i]);
+  }
+}
+
+void imprimeLista(int lista[]){
+  Serial.print("---> ");
+  for (int i = 0; i < 8; i++){
+    Serial.print(lista[i]);
+    Serial.print(" ");
+  }
+  Serial.println("");
+}
+
+char aguardaRespostaBinaria(){
+  char resposta = '\0';
+
+  while (true){
+    if(Serial.available()){
+      resposta = Serial.read();
+
+      if (resposta == '\n' || resposta == '\r' || resposta == ' ') {
+        continue;
+      }
+
+      if (resposta == '1' || resposta == '0'){
+        while (Serial.available()) Serial.read();
+        return resposta;
+      }
+      else{
+        Serial.println("Entrada inválida. Digite apenas 1 ou 0:");
+        while (Serial.available()) Serial.read();
+      }
+    }
   }
 }
 
@@ -58,7 +96,6 @@ void trocarDisplay() {
   if (alterna > 5) {
     alterna = 1;
   }
-
 }
 
 void setup() {
@@ -79,20 +116,59 @@ void setup() {
 }
 
 void loop() {
-    if ((continuar == 's') || (continuar == 'S')){
-    Serial.println("Bem vindo(a) ao adivinhador binário!");
+  Serial.println("Bem vindo(a) ao adivinhador binário!");
+  delay(500);
+  Serial.println("Pense em um número de 0 a 15, mas não me diga rs");
+  delay(1500);
+  Serial.println("Digite 1 quando estiver pronto(a)");
+  while (aguardaRespostaBinaria() != '1') aguardaRespostaBinaria();
 
-    // lógica para ser desenvolvida
-
-    Serial.print("Você deseja tentar outra vez? (S/N): ");
+  Serial.println("A partir de agora eu farei algumas perguntas, digite 1 para confirmar ou 0 para negar");
+  
+  Serial.print("Seu número está aqui? ");
+  imprimeLista(lista1);
+  confirmacao = aguardaRespostaBinaria();
+  if (confirmacao == '1'){
+    valor_unidade = 1;
+    num = 1;
   }
 
-    while (Serial.available() == 0); // espera entrada
-    continuar = Serial.read();
+  Serial.print("Seu número está aqui? ");
+  imprimeLista(lista2);
+  confirmacao = aguardaRespostaBinaria();
+  if (confirmacao == '1'){
+    valor_dezena = 1;
+    num = num + 2;
+  }
 
-    // limpa o buffer
-    while (Serial.available() > 0) {
-      Serial.read();
-    }
+  Serial.print("Seu número está aqui? ");
+  imprimeLista(lista3);
+  confirmacao = aguardaRespostaBinaria();
+  if (confirmacao == '1'){
+    valor_centena = 1;
+    num = num + 4;
+  }
 
+  Serial.print("Seu número está aqui? ");
+  imprimeLista(lista4);
+  confirmacao = aguardaRespostaBinaria();
+  if (confirmacao == '1'){
+    valor_milhar = 1;
+    num = num + 8;
+  }
+
+  Serial.print("O número que você escolheu é... ");
+  delay(1000);
+  Serial.print(num);
+  Serial.println(" !!!");
+
+  Serial.println("Se quiser tentar outra vez, basta digitar 1 novamente :D");
+  confirmacao = aguardaRespostaBinaria();
+  if (confirmacao == '1'){
+    valor_unidade = 0;
+    valor_dezena = 0;
+    valor_centena = 0;
+    valor_milhar = 0;
+    num = 0;
+  }
 }
